@@ -7,7 +7,7 @@ function footer() {
 <Container>
     <Row>
         <Col className="text-center">
-            <span >CopyRight &copy; TechInfo YT</span>
+            <span >Made By MS</span>
         </Col>
     </Row>
 </Container>
