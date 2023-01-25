@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Loader from "../components/shared/Loader";
 import Message from "../components/shared/Message";
 import FormContainer from '../components/shared/FormContainer';
-import { getUserDetails } from '../actions/userAction';
+import { getUserDetails ,updateUserProfile} from '../actions/userAction';
 
 const ProfileScreen = ({location,history}) => {
     const [email,setEmail]=useState("")
@@ -20,7 +20,8 @@ const ProfileScreen = ({location,history}) => {
     const {loading,error,user}=userDetails;
     const {userInfo}=userLogin;
 
-
+    const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
+    const { success } = userUpdateProfile;
     useEffect(()=>{
         if(!userInfo){
             history.push('/login')}
@@ -41,7 +42,10 @@ const ProfileScreen = ({location,history}) => {
 
     const submitHandler=(e)=>{
         e.preventDefault();
-      
+
+        dispatch(updateUserProfile({ id: user._id, name, email, password }));      
+
+
         
     }
 
@@ -52,6 +56,7 @@ const ProfileScreen = ({location,history}) => {
     <Col md={3}>
         <h1>Update Information</h1>
         {error && <Message varient="danger">{error}</Message>}
+        {success && <Message variant="success">Profile Updated</Message>}
     {loading && <Loader></Loader>}
     {message && <Message variant="danger">{message}</Message>}
        <Form onSubmit={submitHandler}>
@@ -83,7 +88,7 @@ const ProfileScreen = ({location,history}) => {
             <Form.Control type="password" placeholder="Re-enter password" value={confirmpassword} onChange={(e)=>setconfirmPassword(e.target.value)}></Form.Control>
 
         </Form.Group>
-        <Button type="submit" varient="primary">SIGN IN</Button>
+        <Button type="submit" varient="primary">Update</Button>
         
     </Form>
     </Col>

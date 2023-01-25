@@ -7,6 +7,7 @@ const connectDb = require("./config/config");
 dotenv.config();
 connectDb();
 const productRoutes=require('./routes/productRoute');
+const orderRoutes=require('./routes/orderRoute');
 
 const usersRoutes=require('./routes/UserRoute');
 
@@ -23,6 +24,11 @@ app.get("/",(req,res)=>{
 
 app.use('/api',productRoutes)
 app.use('/api/users',usersRoutes)
+app.use('/api/orders',orderRoutes)
+app.get('/api/config/paypal',(req,res)=>{
+    res.send(process.env.PAYPAL_CLIENT_ID);
+    
+})
 const PORT=8080;
 
 app.listen(process.env.PORT ||PORT,()=>{
